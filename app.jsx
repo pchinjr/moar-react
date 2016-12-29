@@ -45,7 +45,6 @@ var AddEntryForm = React.createClass({
     this.setState({title: "", content: ""});
   },
   
-  
   render: function() {
     return (
       <div className="row">
@@ -71,12 +70,15 @@ var AddEntryForm = React.createClass({
 
 function Entry(props) {
   return (
-      <div className="row">
+    <div className="row">
         <div className="col s12 m6">
             <div className="card blue-grey darken-1">
                 <div className="card-content white-text">
                     <span className="card-title">{props.title}</span>
                     <p>{props.content}</p>
+                </div>
+                <div className="card-action">
+                    <a className="remove-entry" onClick={props.onRemove}>✖ Delete</a>
                 </div>
             </div>
         </div>
@@ -87,6 +89,7 @@ function Entry(props) {
 Entry.propTypes = {
   title: React.PropTypes.string.isRequired,
   content: React.PropTypes.string.isRequired,
+  onRemove: React.PropTypes.func.isRequired,
 };
 
 var Application = React.createClass({
@@ -114,7 +117,11 @@ var Application = React.createClass({
     this.setState(this.state);
     console.log(this.state);
     nextId += 1;
-    
+  },
+
+  onRemoveEntry: function(index) {
+      this.state.entries.splice(index, 1);
+      this.setState(this.state);
   },
 
   render: function() {
@@ -123,6 +130,7 @@ var Application = React.createClass({
             {this.state.entries.map(function(entry, index) {
                 return (
                 <Entry 
+                    onRemove={function(){this.onRemoveEntry(index)}.bind(this)}
                     title={entry.title} 
                     content={entry.content} 
                     key={entry.id} 
