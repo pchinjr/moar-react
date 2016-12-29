@@ -1,4 +1,4 @@
-var ENTRIES = [
+let ENTRIES = [
   {
     title: "The first post",
     content: "Seitan taxidermy cardigan kitsch cliche cray. Whatever stumptown authentic cardigan cold-pressed live-edge. Flexitarian typewriter ramps fanny pack, kale chips whatever photo booth deep v chicharrones kitsch food truck slow-carb.",
@@ -16,9 +16,9 @@ var ENTRIES = [
   },
 ];
 
-var nextId = 4;
+let nextId = 4;
 
-var AddEntryForm = React.createClass({
+const AddEntryForm = React.createClass({
   propTypes: {
     onAdd: React.PropTypes.func.isRequired,
   },
@@ -92,7 +92,7 @@ Entry.propTypes = {
   onRemove: React.PropTypes.func.isRequired,
 };
 
-var Application = React.createClass({
+const Application = React.createClass({
   propTypes: {
     title: React.PropTypes.string,
     initialEntries: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -127,16 +127,14 @@ var Application = React.createClass({
   render: function() {
     return (
         <div className="container">
-            {this.state.entries.map(function(entry, index) {
-                return (
-                <Entry 
+            {this.state.entries.map( (entry, index) =>
+                (<Entry 
                     onRemove={function(){this.onRemoveEntry(index)}.bind(this)}
                     title={entry.title} 
                     content={entry.content} 
                     key={entry.id} 
-                />
-                );
-            }.bind(this))}
+                />)
+            )}
             <AddEntryForm onAdd={this.onEntryAdd} />
         </div>
     );
